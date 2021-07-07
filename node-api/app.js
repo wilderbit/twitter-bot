@@ -9,7 +9,7 @@ const twitterClient = new TwitterApi({
    appSecret: secrets.appSecret,
    accessToken: secrets.accessToken,
    accessSecret: secrets.accessSecret,
- });
+});
 
 
 async function getUser() {
