@@ -1,5 +1,6 @@
 const express = require('express');
 const twitterClient = require('./twitter/client');
+const twitterUser = require('./twitter/userTweets');
 
 const app = express();
 
@@ -7,7 +8,9 @@ app.route('/new-user/:username').get( async (req, res) => {
     const user = await twitterClient.v2.userByUsername(req.params.username, {
         'user.fields': ['profile_image_url', 'public_metrics', "description"]
     });
-    res.json(user)
+    const tweets = await twitterUser.getUserTweets(user.data.id);
+    console.log(user)
+    res.json(tweets)
 });
 
 async function getUser() {
