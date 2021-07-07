@@ -1,16 +1,12 @@
-const { TwitterApi } = require('twitter-api-v2');
-const secrets = require('./secrets.json')
+const express = require('express');
+const twitterClient = require('./twitter/client');
 
+const app = express();
 
-console.log(secrets)
-
-const twitterClient = new TwitterApi({
-   appKey: secrets.appKey,
-   appSecret: secrets.appSecret,
-   accessToken: secrets.accessToken,
-   accessSecret: secrets.accessSecret,
+app.route('/new-user/:username').get( async (req, res) => {
+    const user = await twitterClient.v2.userByUsername(req.params.username)
+    res.json(user)
 });
-
 
 async function getUser() {
     //const user = await twitterClient.v2.userByUsername('naval');
@@ -23,4 +19,8 @@ async function getUser() {
     // await twitterClient.v1.uploadMedia(await fs.promises.readFile(path), { type: 'jpg' })
 }
 
-getUser();
+//getUser();
+
+app.listen(4000, () => {
+   console.log('Server Started');
+});
