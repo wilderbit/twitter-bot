@@ -14,6 +14,11 @@ app.route('/api/users/by/:username').get( async (req, res) => {
     res.json(user)
 });
 
+app.route('/api/users/:userId/tweets').get(async (req, res) => {
+    const tweets = await twitterUser.getUserTweets(req.params.userId.trim())
+    res.json(tweets)
+})
+
 async function getUser() {
     //const user = await twitterClient.v2.userByUsername('naval');
     //console.log(user)
